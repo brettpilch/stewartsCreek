@@ -1,11 +1,16 @@
 ////TO DO: parse department web pages for teacher names and links to their webpages.
 
 Fiveframe fiver;
+Frame sixth;
+String[] sixthNames = {"Mrs. L. Scott", "Mrs. Brawley", "Mr. Bell", "Mrs. Clay", "New Teacher",
+                       "Mrs. Walker", "Mrs. Baird", "Mrs. Donnelly", "Mr. Kovach", "Mrs. Scott",
+                       "Mrs. Whitlock", "Mrs. Johnson", "Ms. Pollack", "Mrs. Darnall", "Ms. Duncan"};
 int mousePressX, mousePressY;
 int mouseReleaseX, mouseReleaseY, threshold;
 Button cButton, lButton, rButton, tButton, bButton;
 Button[] buttons = new Button[5];
-RadioButtons leftPane;
+RadioButtons leftPane, sixthPane;
+String status;
 String[] leftNames = {"6th Grade", "7th Grade", "8th Grade"};
 boolean drag = false;
 String data6thGrade = "http://www.scm.rcs.k12.tn.us/faculty/6a_b/6th_gr_department.htm";
@@ -61,6 +66,7 @@ void setup(){
   textSize(14);
   threshold = 50;
   logo = loadImage("logo.png");
+  status = "fiver";
   table6th = new TableWithColumns(columns6th, "6th", width / 2, height / 2, width - 50, height - 150);
   //tables = new TableWithColumns[]{table6th};
   cButton = new Button("center button", "Home", 0, 0, width / 4, height / 4);
@@ -74,6 +80,10 @@ void setup(){
   buttons[3] = tButton;
   buttons[4] = bButton;
   fiver = new Fiveframe("Stewarts Creek Middle School", "6th Grade", "8th Grade", "Calendar", "7th Grade");
+  sixth = new Frame("6th Grade", "", "", "", "");
+  sixthPane = new RadioButtons(15, 0, 0, width, height / 15, VERTICAL);
+  sixthPane.setNames(sixthNames);
+  sixth.addRadioButtons(sixthPane);
   getData(data6thGrade, fiver.left);
   getData(data7thGrade, fiver.bottom);
   getData(data8thGrade, fiver.right);
@@ -157,12 +167,18 @@ void arrow(String orientation){
 void draw(){
   background(bgcolor);
   //showButtons();
-  fiver.display();
-//  for (int i = 0; i < tables.length; i++){
-//    if (tables[i].getLocation().equals(fiver.getCurrent().getName())){
-//      tables[i].display();
-//    }
-//  }
+  if (status.equals("fiver")){
+    pushStyle();
+    textSize(40);
+    fiver.display();
+    popStyle();
+    fiver.update();
+  } else if (status.equals("6th Grade")){
+    pushStyle();
+    textSize(25);
+    sixth.display();
+    popStyle();
+  }
   if (drag){
     pushStyle();
     rectMode(CENTER);
@@ -182,7 +198,11 @@ void draw(){
 void mousePressed(){
   mousePressX = mouseX;
   mousePressY = mouseY;
-
+  if (status.equals("fiver")){
+    fiver.mousePressed();
+  } else if (status.equals("6th Grade")){
+    sixth.mousePressed();
+  }
   //link("http://processingjs.org"); 
 
 }
@@ -194,7 +214,7 @@ void mouseReleased(){
   mouseReleaseY = mouseY;
   int Xchange = mouseReleaseX - mousePressX;
   int Ychange = mouseReleaseY - mousePressY;
-  if (abs(Xchange) > abs(Ychange) && abs(Xchange) > threshold){
+  if (abs(Xchange) > abs(Ychange) && abs(Xchange) > threshold && status.equals("fiver")){
     if (Xchange > 0){
       fiver.moveLeft();
     } else {
@@ -206,13 +226,22 @@ void mouseReleased(){
     } else {
       fiver.moveDown();
     }
-  } else {
+  } else if (status.equals("fiver")){
     fiver.mouseReleased();
+  } else if (status.equals("6th Grade")){
+    sixth.mouseReleased();
+    if (abs(Xchange) > threshold || abs(Ychange) > threshold){
+      status = "fiver";
+    }
   }
 }
 
 void mouseDragged(){
   drag = true;
-  fiver.setDrag(true);
+  if (status.equals("fiver")){
+    fiver.mouseDragged();
+  } else if (status.equals("6th Grade")){
+    sixth.mouseDragged();
+  }
 }
   

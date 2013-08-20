@@ -13,8 +13,8 @@ class Widget
   String name;
   String location;
 
-  color inactiveColor = color(60, 60, 100);
-  color activeColor = color(100, 100, 160);
+  color inactiveColor = color(215, 0, 0);
+  color activeColor = color(255, 40, 40);
   color bgColor = inactiveColor;
   color lineColor = color(255);
   
@@ -401,6 +401,14 @@ class RadioButtons extends Widget
       }
     }
     return "";
+  }
+  
+  void allOff()
+  {
+    for (int i = 0; i < buttons.length; i++)
+    {
+      buttons[i].set(false);
+    }
   }
 
   void display()

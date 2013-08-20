@@ -65,6 +65,10 @@ class Fiveframe
     }
   }
   
+  void update(){
+    current.updateStatus();
+  }
+  
   void display(){
     current.display();
 //    if (drag) {
@@ -82,8 +86,16 @@ class Fiveframe
 //    }
   }
   
+  void mousePressed(){
+    current.mousePressed();
+  }
+  
+  void mouseDragged(){
+    current.mouseDragged();
+    setDrag(true);
+  }
+  
   void mouseReleased(){
-    setDrag(false);
     current.mouseReleased();
   }
 }

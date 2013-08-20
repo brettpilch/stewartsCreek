@@ -54,6 +54,16 @@ class Frame
     radioButtonList.add(rb);
   }
   
+  void updateStatus(){
+    for (int i = 0; i < radioButtonList.size(); i++){
+      String tempStatus = radioButtonList.get(i).getString();
+      if (!tempStatus.equals("")){
+        radioButtonList.get(i).allOff();
+        status = tempStatus;
+      }
+    }
+  }
+  
   void display()
   {
     //text(name, width / 2, height / 2);
@@ -96,14 +106,29 @@ class Frame
     }
   }
   
-//  void mousePressed(){
-//    pass
-//  }
+  void mousePressed(){
+    for (int i = 0; i < radioButtonList.size(); i++){
+      radioButtonList.get(i).mousePressed();
+    }
+  }
+  
+  void mouseDragged(){
+    setDrag(true);
+    for (int i = 0; i < radioButtonList.size(); i++){
+      radioButtonList.get(i).mouseDragged();
+    }
+  }
   
   void mouseReleased(){
-    if (table != null){
-      table.mouseReleased();
+    if (!drag){
+      if (table != null){
+        table.mouseReleased();
+      }
+      for (int i = 0; i < radioButtonList.size(); i++){
+        radioButtonList.get(i).mouseReleased();
+      }
     }
+    setDrag(false);
   }
 }
 
