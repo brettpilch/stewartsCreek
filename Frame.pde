@@ -6,6 +6,7 @@ class Frame
   String left, right, top, bottom;
   FrameImage[] images = new FrameImage[0];
   TableWithColumns table;
+  ArrayList<RadioButtons> radioButtonList = new ArrayList<RadioButtons>();
   
   Frame(String nm, String l, String r, String t, String b)
   {
@@ -48,15 +49,23 @@ class Frame
     table = twc;
   }
   
+  void addRadioButtons(RadioButtons rb)
+  {
+    radioButtonList.add(rb);
+  }
+  
   void display()
   {
     //text(name, width / 2, height / 2);
     if (table != null){
       table.display();
     }
+    for (int i = 0; i < radioButtonList.size(); i++){
+      radioButtonList.get(i).display();
+    }
     pushStyle();
     textSize(25);
-    text(title, width / 2, 40);
+    //text(title, width / 2, 40);
     popStyle();
     for (int i = 0; i < images.length; i++){
       images[i].display();

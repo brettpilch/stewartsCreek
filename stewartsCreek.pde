@@ -5,6 +5,8 @@ int mousePressX, mousePressY;
 int mouseReleaseX, mouseReleaseY, threshold;
 Button cButton, lButton, rButton, tButton, bButton;
 Button[] buttons = new Button[5];
+RadioButtons leftPane;
+String[] leftNames = {"6th Grade", "7th Grade", "8th Grade"};
 boolean drag = false;
 String data6thGrade = "http://www.scm.rcs.k12.tn.us/faculty/6a_b/6th_gr_department.htm";
 String data7thGrade = "http://www.scm.rcs.k12.tn.us/faculty/7a_b/7th_gr_department.htm";
@@ -81,7 +83,10 @@ void setup(){
   } else {scalar = width;}
   FrameImage homeLogo = new FrameImage(logo, width / 2, height / 2, map(logo.width, 0, logo.width, 0, scalar), map(logo.height, 0, logo.height, 0, scalar));
   fiver.center.addImage(homeLogo);
-  fiver.left.addTable(table6th);
+  //fiver.left.addTable(table6th);
+  leftPane = new RadioButtons(3, 0, 0, width, height / 3, VERTICAL);
+  leftPane.setNames(leftNames);
+  fiver.left.addRadioButtons(leftPane);
 }
 
 void showButtons(){
